@@ -171,11 +171,31 @@ func waitGroupMergeChannels() {
 	// println("waitGroupWithChannels exit")
 }
 
+func emptyChannel() <-chan string {
+	ch := make(chan string)
+
+	go func(ch chan string) {
+		defer close(ch)
+		println("emptyChannel return")
+		//ch <- "Hello"
+		return
+	}(ch)
+
+	return ch
+}
+
+func emptyChannelTest() {
+	emptyCh := emptyChannel()
+	for c := range emptyCh {
+		println("c is ", c)
+	}
+}
+
 func main() {
 
 	//waitGroup()
 	//waitGroupWithChannels()
-	waitGroupMergeChannels()
-
+	//waitGroupMergeChannels()
+	//emptyChannelTest()
 	println("main done!!")
 }
